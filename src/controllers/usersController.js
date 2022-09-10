@@ -7,8 +7,10 @@ const URL = process.env.URL_USERS;
 // Users Controller
 async function getUsers(req, res) {
   try {
-    const users = await axios.get(URL + '?page=1&limit=15');
+    const { page = 1, limit = 10, sortBy, order = 'asc' } = req.query
+    const users = await axios.get(page && limit ? URL + `?page=${page}&limit=${limit}` : URL);
     const response = await parseUsers(users.data);
+    if(sortBy) sortData(response, sortBy, order);
     res.send(response);
   } catch (error) {
     res.status(400).send(error);
@@ -46,6 +48,16 @@ async function getUserContactsByUserId(req, res) {
   } catch (error) {
     res.status(400).send(error);
   }
+}
+
+// Sort data when query contains sortBy
+function sortData(data, sortBy, order) {
+  data.sort((a, b) => {
+    if(a[sortBy] < b[sortBy]) {
+      return order !== 'desc' ? -1 : 1;
+    }
+    return order !== 'desc' ? 1 : -1;
+  });
 }
 
 module.exports = {

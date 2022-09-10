@@ -19,7 +19,7 @@ const parseUsers = async (users) => {
       const newValue = Object.assign(filteredUser, data);
       usersWithAddressAndContact.push(newValue);
     }
-    return usersWithAddressAndContact
+    return usersWithAddressAndContact;
   } catch (error) {
     console.log(error);
   }
@@ -45,7 +45,7 @@ const treatUser = async (userId) => {
 
     return { filteredAddresses, filteredContacts };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
