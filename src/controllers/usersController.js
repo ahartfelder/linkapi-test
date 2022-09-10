@@ -1,18 +1,21 @@
 const axios = require('axios');
+const parseUsers = require('../services/parseUsers');
 require('dotenv').config();
 
 const URL = process.env.URL_USERS;
 
+// Users Controller
 async function getUsers(req, res) {
   try {
-    const users = await axios.get(URL);
-  
-    res.send(users.data);
+    const users = await axios.get(URL + '?page=1&limit=15');
+    const response = await parseUsers(users.data);
+    res.send(response);
   } catch (error) {
     res.status(400).send(error);
   }
 }
 
+// User Controller
 async function getUserById(req, res) {
   try {
     const user = await axios.get(URL + `/${req.userId}`);
@@ -23,6 +26,7 @@ async function getUserById(req, res) {
   }
 }
 
+// User Addresses Controller
 async function getUserAddressesByUserId(req, res) {
   try {
     const user = await axios.get(URL + `/${req.userId}/address`);
@@ -33,6 +37,7 @@ async function getUserAddressesByUserId(req, res) {
   }
 }
 
+// User Contacts Controller
 async function getUserContactsByUserId(req, res) {
   try {
     const user = await axios.get(URL + `/${req.userId}/contacts`);
