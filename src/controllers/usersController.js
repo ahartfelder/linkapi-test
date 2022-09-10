@@ -7,7 +7,7 @@ const URL = process.env.URL_USERS;
 // Users Controller
 async function getUsers(req, res) {
   try {
-    const { page = 1, limit = 10, sortBy, order = 'asc' } = req.query
+    const { page, limit, sortBy, order = 'asc' } = req.query
     const users = await axios.get(page && limit ? URL + `?page=${page}&limit=${limit}` : URL);
     const response = await parseUsers(users.data);
     if(sortBy) sortData(response, sortBy, order);
