@@ -1,6 +1,4 @@
-# Desafio Técnico LinkApi
-
-Welcome to Desafio Técnico LinkApi!
+# REST API
 
 This is an API to fetch users data from MockApi.io and return required information.
 
